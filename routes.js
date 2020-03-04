@@ -1,7 +1,6 @@
 const Accounts = require('./app/controllers/accounts');
 const Stadiums = require('./app/controllers/stadiums');
 
-
 module.exports = [
     { method: 'GET', path: '/', config: Accounts.index },
     { method: 'GET', path: '/signup', config: Accounts.showSignup },
