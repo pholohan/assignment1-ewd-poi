@@ -17,6 +17,7 @@ module.exports = [
     { method: 'POST', path: '/uploadfile/{id}', config: Stadiums.uploadFile },
     { method: 'GET', path: '/home', config: Stadiums.home },
     { method: 'GET', path: '/report', config: Stadiums.report },
+    { method: 'GET', path: '/userreport', config: Accounts.userreport },
     { method: 'GET', path: '/stadiumupload/{id}', config: Stadiums.uploadstadiumimages },
 
     {

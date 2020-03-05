@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Admin = require('../models/admin');
 const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
@@ -13,12 +14,14 @@ const Accounts = {
             return h.view('main', { title: 'Welcome to GAA Stadiums' });
         }
     },
+
     showSignup: {
         auth: false,
         handler: function(request, h) {
             return h.view('signup', { title: 'Sign up for GAA Stadiums' });
         }
     },
+
     signup: {
         auth: false,
         validate: {
@@ -72,6 +75,7 @@ const Accounts = {
             return h.view('login', { title: 'Login to GAA Stadiums' });
         }
     },
+
     login: {
         auth: false,
         validate: {
@@ -98,13 +102,21 @@ const Accounts = {
             const { email, password } = request.payload;
             try {
                 let user = await User.findByEmail(email);
-                if (!user) {
+                let admin = await Admin.findByEmail(email);
+                if ((!user)&&(!admin)) {
                     const message = 'Email address is not registered';
                     throw Boom.unauthorized(message);
                 }
-                user.comparePassword(password);
-                request.cookieAuth.set({ id: user.id });
-                return h.redirect('/report');
+                if(user) {
+                    user.comparePassword(password);
+                    request.cookieAuth.set({ id: user.id });
+                    return h.redirect('/report');
+                }
+                else if(admin){
+                    admin.comparePassword(password);
+                    request.cookieAuth.set({ id: admin.id });
+                    return h.redirect('/userreport');
+                }
             } catch (err) {
                 return h.view('login', { errors: [{ message: err.message }] });
             }
@@ -162,6 +174,16 @@ const Accounts = {
                 }
             }
         },
+
+    userreport: {
+        handler: async function(request, h) {
+            const users = await User.find().lean();
+            return h.view('userreport', {
+                title: 'Users Added to Date',
+                users: users,
+            });
+        }
+    },
 
     logout: {
         handler: function(request, h) {

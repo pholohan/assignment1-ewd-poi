@@ -20,6 +20,15 @@
       "password": "secret"
     }
   },
+  "admins": {
+    "_model": "Admin",
+    "lisa": {
+      "firstName": "Lisa",
+      "lastName": "Simpson",
+      "email": "lisa@simpson.com",
+      "password": "secret"
+    }
+  },
   "stadiums": {
     "_model": "Stadium",
     "one": {
