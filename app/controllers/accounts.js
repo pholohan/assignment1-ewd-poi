@@ -135,8 +135,8 @@ const Accounts = {
         }
     },
 
-        updateSettings: {
-            validate: {
+    updateSettings: {
+        validate: {
                 payload: {
                     firstName: Joi.string().required(),
                     lastName: Joi.string().required(),
@@ -158,7 +158,7 @@ const Accounts = {
                         .code(400);
                 }
             },
-            handler: async function(request, h) {
+        handler: async function(request, h) {
                 try {
                     const userEdit = request.payload;
                     const id = request.auth.credentials.id;
@@ -184,6 +184,72 @@ const Accounts = {
             });
         }
     },
+
+    deleteUser: {
+        handler: async function(request, h) {
+            try {
+                const id = request.params.id;
+                const user = await User.findById(id).lean();
+                await User.deleteOne(user);
+                return h.redirect('/userreport');
+            }catch(err){
+                return h.view('main', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
+    adminshowSettings: {
+        handler: async function(request, h) {
+            try {
+                const id = request.params.id;
+                const user = await User.findById(id).lean();
+                return h.view('adminsettings', {title: 'Edit Account Settings', user: user});
+            }catch(err){
+                return h.view('login', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
+    adminupdateSettings: {
+        validate: {
+            payload: {
+                firstName: Joi.string().required(),
+                lastName: Joi.string().required(),
+                email: Joi.string()
+                  .email()
+                  .required(),
+                password: Joi.string().required()
+            },
+            options: {
+                abortEarly: false
+            },
+            failAction: function(request, h, error) {
+                return h
+                  .view('settings', {
+                      title: 'Sign up error',
+                      errors: error.details
+                  })
+                  .takeover()
+                  .code(400);
+            }
+        },
+        handler: async function(request, h) {
+            try {
+                const userEdit = request.payload;
+                const id = request.params.id;
+                const user = await User.findById(id);
+                user.firstName = userEdit.firstName;
+                user.lastName = userEdit.lastName;
+                user.email = userEdit.email;
+                user.password = userEdit.password;
+                await user.save();
+                return h.redirect('/userreport');
+            } catch (err) {
+                return h.view('main', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
 
     logout: {
         handler: function(request, h) {

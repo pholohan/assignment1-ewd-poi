@@ -18,6 +18,9 @@ module.exports = [
     { method: 'GET', path: '/home', config: Stadiums.home },
     { method: 'GET', path: '/report', config: Stadiums.report },
     { method: 'GET', path: '/userreport', config: Accounts.userreport },
+    { method: 'GET', path: '/deleteuser/{id}', config: Accounts.deleteUser },
+    { method: 'GET', path: '/edituser/{id}', config: Accounts.adminshowSettings },
+    { method: 'POST', path: '/edituser/{id}', config: Accounts.adminupdateSettings },
     { method: 'GET', path: '/stadiumupload/{id}', config: Stadiums.uploadstadiumimages },
 
     {
