@@ -20,6 +20,15 @@
       "password": "secret"
     }
   },
+  "admins": {
+    "_model": "Admin",
+    "lisa": {
+      "firstName": "Lisa",
+      "lastName": "Simpson",
+      "email": "lisa@simpson.com",
+      "password": "secret"
+    }
+  },
   "stadiums": {
     "_model": "Stadium",
     "one": {
@@ -45,6 +54,54 @@
       "province": "Munster",
       "stadiumURL": "https://res.cloudinary.com/dbywou1bu/image/upload/v1582995761/5e5a48b90d78020c38c2293e.jpg",
       "contributer": "->users.homer"
+    },
+    "four": {
+      "name": "Tuam Stadium",
+      "county": "Galway",
+      "capacity": 6700,
+      "province": "Connacht",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583574946/5e636e30aeaa621834d7ef46.jpg",
+      "contributer": "->users.marge"
+    },
+    "five": {
+      "name": "Nowlan Park",
+      "county": "Kilkenny",
+      "capacity": 27800,
+      "province": "Leinster",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583574973/5e636e30aeaa621834d7ef47.jpg",
+      "contributer": "->users.marge"
+    },
+    "six": {
+      "name": "Pairc Ui Chaoimh",
+      "county": "Cork",
+      "capacity": 45000,
+      "province": "Munster",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575006/5e636e30aeaa621834d7ef48.jpg",
+      "contributer": "->users.marge"
+    },
+    "seven": {
+      "name": "Healy Park Clones",
+      "county": "Monaghan",
+      "capacity": 36000,
+      "province": "Ulster",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575175/5e636e30aeaa621834d7ef49.jpg",
+      "contributer": "->users.bart"
+    },
+    "eight": {
+      "name": "Wexford Park",
+      "county": "Wexford",
+      "capacity": 25000,
+      "province": "Leinster",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575189/5e636e30aeaa621834d7ef4a.jpg",
+      "contributer": "->users.bart"
+    },
+    "nine": {
+      "name": "Gaelic Grounds",
+      "county": "Limerick",
+      "capacity": 49866,
+      "province": "Munster",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575219/5e636e30aeaa621834d7ef4b.jpg",
+      "contributer": "->users.bart"
     }
   }
 }
