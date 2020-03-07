@@ -60,7 +60,7 @@
       "county": "Galway",
       "capacity": 6700,
       "province": "Connacht",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583574946/5e636e30aeaa621834d7ef46.jpg",
       "contributer": "->users.marge"
     },
     "five": {
@@ -68,7 +68,7 @@
       "county": "Kilkenny",
       "capacity": 27800,
       "province": "Leinster",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583574973/5e636e30aeaa621834d7ef47.jpg",
       "contributer": "->users.marge"
     },
     "six": {
@@ -76,7 +76,7 @@
       "county": "Cork",
       "capacity": 45000,
       "province": "Munster",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575006/5e636e30aeaa621834d7ef48.jpg",
       "contributer": "->users.marge"
     },
     "seven": {
@@ -84,7 +84,7 @@
       "county": "Monaghan",
       "capacity": 36000,
       "province": "Ulster",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575175/5e636e30aeaa621834d7ef49.jpg",
       "contributer": "->users.bart"
     },
     "eight": {
@@ -92,7 +92,7 @@
       "county": "Wexford",
       "capacity": 25000,
       "province": "Leinster",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575189/5e636e30aeaa621834d7ef4a.jpg",
       "contributer": "->users.bart"
     },
     "nine": {
@@ -100,7 +100,7 @@
       "county": "Limerick",
       "capacity": 49866,
       "province": "Munster",
-      "stadiumURL": "",
+      "stadiumURL": "http://res.cloudinary.com/dbywou1bu/image/upload/v1583575219/5e636e30aeaa621834d7ef4b.jpg",
       "contributer": "->users.bart"
     }
   }
