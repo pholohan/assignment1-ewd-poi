@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Admin = require('../models/admin');
 const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
@@ -13,12 +14,14 @@ const Accounts = {
             return h.view('main', { title: 'Welcome to GAA Stadiums' });
         }
     },
+
     showSignup: {
         auth: false,
         handler: function(request, h) {
             return h.view('signup', { title: 'Sign up for GAA Stadiums' });
         }
     },
+
     signup: {
         auth: false,
         validate: {
@@ -72,6 +75,7 @@ const Accounts = {
             return h.view('login', { title: 'Login to GAA Stadiums' });
         }
     },
+
     login: {
         auth: false,
         validate: {
@@ -98,13 +102,21 @@ const Accounts = {
             const { email, password } = request.payload;
             try {
                 let user = await User.findByEmail(email);
-                if (!user) {
+                let admin = await Admin.findByEmail(email);
+                if ((!user)&&(!admin)) {
                     const message = 'Email address is not registered';
                     throw Boom.unauthorized(message);
                 }
-                user.comparePassword(password);
-                request.cookieAuth.set({ id: user.id });
-                return h.redirect('/report');
+                if(user) {
+                    user.comparePassword(password);
+                    request.cookieAuth.set({ id: user.id });
+                    return h.redirect('/report');
+                }
+                else if(admin){
+                    admin.comparePassword(password);
+                    request.cookieAuth.set({ id: admin.id });
+                    return h.redirect('/userreport');
+                }
             } catch (err) {
                 return h.view('login', { errors: [{ message: err.message }] });
             }
@@ -123,8 +135,8 @@ const Accounts = {
         }
     },
 
-        updateSettings: {
-            validate: {
+    updateSettings: {
+        validate: {
                 payload: {
                     firstName: Joi.string().required(),
                     lastName: Joi.string().required(),
@@ -146,7 +158,7 @@ const Accounts = {
                         .code(400);
                 }
             },
-            handler: async function(request, h) {
+        handler: async function(request, h) {
                 try {
                     const userEdit = request.payload;
                     const id = request.auth.credentials.id;
@@ -162,6 +174,82 @@ const Accounts = {
                 }
             }
         },
+
+    userreport: {
+        handler: async function(request, h) {
+            const users = await User.find().lean();
+            return h.view('userreport', {
+                title: 'Users Added to Date',
+                users: users,
+            });
+        }
+    },
+
+    deleteUser: {
+        handler: async function(request, h) {
+            try {
+                const id = request.params.id;
+                const user = await User.findById(id).lean();
+                await User.deleteOne(user);
+                return h.redirect('/userreport');
+            }catch(err){
+                return h.view('main', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
+    adminshowSettings: {
+        handler: async function(request, h) {
+            try {
+                const id = request.params.id;
+                const user = await User.findById(id).lean();
+                return h.view('adminsettings', {title: 'Edit Account Settings', user: user});
+            }catch(err){
+                return h.view('login', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
+    adminupdateSettings: {
+        validate: {
+            payload: {
+                firstName: Joi.string().required(),
+                lastName: Joi.string().required(),
+                email: Joi.string()
+                  .email()
+                  .required(),
+                password: Joi.string().required()
+            },
+            options: {
+                abortEarly: false
+            },
+            failAction: function(request, h, error) {
+                return h
+                  .view('settings', {
+                      title: 'Sign up error',
+                      errors: error.details
+                  })
+                  .takeover()
+                  .code(400);
+            }
+        },
+        handler: async function(request, h) {
+            try {
+                const userEdit = request.payload;
+                const id = request.params.id;
+                const user = await User.findById(id);
+                user.firstName = userEdit.firstName;
+                user.lastName = userEdit.lastName;
+                user.email = userEdit.email;
+                user.password = userEdit.password;
+                await user.save();
+                return h.redirect('/userreport');
+            } catch (err) {
+                return h.view('main', { errors: [{ message: err.message }] });
+            }
+        }
+    },
+
 
     logout: {
         handler: function(request, h) {
